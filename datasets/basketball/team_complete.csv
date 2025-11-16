@@ -1,0 +1,107 @@
+id,full_name,abbreviation,nickname,city,state,year_founded
+1610612737,Atlanta Hawks,ATL,Hawks,Atlanta,Atlanta,1949.0
+1610612738,Boston Celtics,BOS,Celtics,Boston,Massachusetts,1946.0
+1610612739,Cleveland Cavaliers,CLE,Cavaliers,Cleveland,Ohio,1970.0
+1610612740,New Orleans Pelicans,NOP,Pelicans,New Orleans,Louisiana,2002.0
+1610612741,Chicago Bulls,CHI,Bulls,Chicago,Illinois,1966.0
+1610612742,Dallas Mavericks,DAL,Mavericks,Dallas,Texas,1980.0
+1610612743,Denver Nuggets,DEN,Nuggets,Denver,Colorado,1976.0
+1610612744,Golden State Warriors,GSW,Warriors,Golden State,California,1946.0
+1610612745,Houston Rockets,HOU,Rockets,Houston,Texas,1967.0
+1610612746,Los Angeles Clippers,LAC,Clippers,Los Angeles,California,1970.0
+1610612747,Los Angeles Lakers,LAL,Lakers,Los Angeles,California,1948.0
+1610612748,Miami Heat,MIA,Heat,Miami,Florida,1988.0
+1610612749,Milwaukee Bucks,MIL,Bucks,Milwaukee,Wisconsin,1968.0
+1610612750,Minnesota Timberwolves,MIN,Timberwolves,Minnesota,Minnesota,1989.0
+1610612751,Brooklyn Nets,BKN,Nets,Brooklyn,New York,1976.0
+1610612752,New York Knicks,NYK,Knicks,New York,New York,1946.0
+1610612753,Orlando Magic,ORL,Magic,Orlando,Florida,1989.0
+1610612754,Indiana Pacers,IND,Pacers,Indiana,Indiana,1976.0
+1610612755,Philadelphia 76ers,PHI,76ers,Philadelphia,Pennsylvania,1949.0
+1610612756,Phoenix Suns,PHX,Suns,Phoenix,Arizona,1968.0
+1610612757,Portland Trail Blazers,POR,Trail Blazers,Portland,Oregon,1970.0
+1610612758,Sacramento Kings,SAC,Kings,Sacramento,California,1948.0
+1610612759,San Antonio Spurs,SAS,Spurs,San Antonio,Texas,1976.0
+1610612760,Oklahoma City Thunder,OKC,Thunder,Oklahoma City,Oklahoma,1967.0
+1610612761,Toronto Raptors,TOR,Raptors,Toronto,Ontario,1995.0
+1610612762,Utah Jazz,UTA,Jazz,Utah,Utah,1974.0
+1610612763,Memphis Grizzlies,MEM,Grizzlies,Memphis,Tennessee,1995.0
+1610612764,Washington Wizards,WAS,Wizards,Washington,District of Columbia,1961.0
+1610612765,Detroit Pistons,DET,Pistons,Detroit,Michigan,1948.0
+1610612766,Charlotte Bobcats,CHA,Hornets,Charlotte,North Carolina,1988.0
+31,Capital Bullets,CAP,CAP,Capital,,
+32,Houston Mavericks,HSM,HSM,Houston,,
+33,Kansas City Kings,KCK,KCK,Kansas City,,
+34,Providence Steamrollers,PRO,PRO,Providence,,
+35,Cleveland Rebels,CLR,CLR,Cleveland,,
+36,Chicago Stags,CHS,CHS,Chicago,,
+37,San Diego Conquistadors,SDA,SDA,San Diego,,
+38,Denver Nuggets,DNN,DNN,Denver,,
+39,The Floridians,FLO,FLO,The,,
+40,Kansas City-Omaha Kings,KCO,KCO,Kansas City-Omaha,,
+41,New Orleans Jazz,NOJ,NOJ,New Orleans,,
+42,Toronto Huskies,TRH,TRH,Toronto,,
+43,San Francisco Warriors,SFW,SFW,San Francisco,,
+44,Memphis Tams,MMT,MMT,Memphis,,
+45,Anaheim Amigos,ANA,ANA,Anaheim,,
+46,San Diego Sails,SDS,SDS,San Diego,,
+47,Philadelphia Warriors,PHW,PHW,Philadelphia,,
+48,Tri-Cities Blackhawks,TRI,TRI,Tri-Cities,,
+49,Baltimore Bullets,BLB,BLB,Baltimore,,
+50,Syracuse Nationals,SYR,SYR,Syracuse,,
+51,Indianapolis Olympians,INO,INO,Indianapolis,,
+52,Oakland Oaks,OAK,OAK,Oakland,,
+53,Rochester Royals,ROC,ROC,Rochester,,
+54,Utah Stars,UTS,UTS,Utah,,
+55,San Diego Rockets,SDR,SDR,San Diego,,
+56,Virginia Squires,VIR,VIR,Virginia,,
+57,Pittsburgh Ironmen,PIT,PIT,Pittsburgh,,
+58,Sheboygan Red Skins,SHE,SHE,Sheboygan Red,,
+59,Charlotte Hornets,CHH,CHH,Charlotte,,
+60,Pittsburgh Condors,PTC,PTC,Pittsburgh,,
+61,Kentucky Colonels,KEN,KEN,Kentucky,,
+62,Waterloo Hawks,WAT,WAT,Waterloo,,
+63,Buffalo Braves,BUF,BUF,Buffalo,,
+64,Los Angeles Stars,LAS,LAS,Los Angeles,,
+65,Minnesota Muskies,MNM,MNM,Minnesota,,
+66,Pittsburgh Pipers,PTP,PTP,Pittsburgh,,
+67,Chicago Packers,CHP,CHP,Chicago,,
+68,Cincinnati Royals,CIN,CIN,Cincinnati,,
+69,New Orleans Buccaneers,NOB,NOB,New Orleans,,
+70,Spirits of St. Louis,SSL,SSL,Spirits of St.,,
+71,Phoenix Suns,PHO,PHO,Phoenix,,
+72,San Antonio Spurs,SAA,SAA,San Antonio,,
+73,Seattle SuperSonics,SEA,SEA,Seattle,,
+74,Dallas Chaparrals,DLC,DLC,Dallas,,
+75,New Jersey Americans,NJA,NJA,New Jersey,,
+76,Denver Nuggets,DNA,DNA,Denver,,
+77,Denver Rockets,DNR,DNR,Denver,,
+78,Miami Floridians,MMF,MMF,Miami,,
+79,Carolina Cougars,CAR,CAR,Carolina,,
+80,Milwaukee Hawks,MLH,MLH,Milwaukee,,
+81,St. Louis Hawks,STL,STL,St. Louis,,
+82,Baltimore Bullets,BAL,BAL,Baltimore,,
+83,San Diego Clippers,SDC,SDC,San Diego,,
+84,Minneapolis Lakers,MNL,MNL,Minneapolis,,
+85,Detroit Falcons,DTF,DTF,Detroit,,
+86,New Orleans/Oklahoma City Hornets,NOK,NOK,New Orleans/Oklahoma City,,
+87,Memphis Pros,MMP,MMP,Memphis,,
+88,Indianapolis Jets,INJ,INJ,Indianapolis,,
+89,Vancouver Grizzlies,VAN,VAN,Vancouver,,
+90,Charlotte Hornets,CHO,CHO,Charlotte,,
+91,Chicago Zephyrs,CHZ,CHZ,Chicago,,
+92,Fort Wayne Pistons,FTW,FTW,Fort Wayne,,
+93,New York Nets,NYA,NYA,New York,,
+94,Washington Bullets,WSB,WSB,Washington,,
+95,Memphis Sounds,MMS,MMS,Memphis,,
+96,Indiana Pacers,INA,INA,Indiana,,
+97,Anderson Packers,AND,AND,Anderson,,
+98,New York Nets,NYN,NYN,New York,,
+99,Brooklyn Nets,BRK,BRK,Brooklyn,,
+100,St. Louis Bombers,STB,STB,St. Louis,,
+101,Texas Chaparrals,TEX,TEX,Texas,,
+102,Washington Capitols,WSC,WSC,Washington,,
+103,New Orleans Hornets,NOH,NOH,New Orleans,,
+104,Washington Capitols,WSA,WSA,Washington,,
+105,New Jersey Nets,NJN,NJN,New Jersey,,
+106,Minnesota Pipers,MNP,MNP,Minnesota,,

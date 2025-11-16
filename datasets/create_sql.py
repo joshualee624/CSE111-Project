@@ -4,7 +4,7 @@ import os
 
 # Database and schema paths
 DB_PATH = './NBA_stats.sqlite'
-SCHEMA_PATH = './sql/schema.sql'
+SCHEMA_PATH = './sql/create_table.sql'
 
 def execute_schema(conn):
     """Execute the schema SQL file to create tables with PKs and FKs"""
@@ -30,14 +30,14 @@ def load_players(conn):
 def load_teams(conn):
     """Load TEAM table with TeamID as PK"""
     print("Loading TEAM table...")
-    # Load basic team info from team.csv
-    df_team = pd.read_csv('./basketball/team.csv')
+    # Load all team info from comprehensive CSV
+    df_team = pd.read_csv('./basketball/team_complete.csv')
     if 'abbreviation' in df_team.columns and 'full_name' in df_team.columns:
         team_data = df_team[['abbreviation', 'full_name', 'city']].drop_duplicates()
         team_data.columns = ['TeamID', 'TeamName', 'City']
         team_data['ArenaName'] = None
         team_data.to_sql('TEAM', conn, if_exists='append', index=False)
-        print(f"  Loaded {len(team_data)} teams from team.csv")
+        print(f"  Loaded {len(team_data)} teams from team_complete.csv")
     
     # Update ArenaName from Team Summaries.csv (most recent season)
     df_summaries = pd.read_csv('./nba/Team Summaries.csv')
@@ -75,14 +75,20 @@ def load_player_season(conn):
     print(f"  Loaded {len(ps_data)} player-season records")
 
 def load_draft_picks(conn):
-    """Load DRAFT_PICK table with FK to SEASON"""
+    """Load DRAFT_PICK table with FK to SEASON and PLAYER"""
     print("Loading DRAFT_PICK table...")
+    # Get existing PlayerIDs to avoid FK violations
+    cursor = conn.cursor()
+    cursor.execute("SELECT PlayerID FROM PLAYER")
+    existing_players = set(row[0] for row in cursor.fetchall())
+    
     df = pd.read_csv('./nba/Draft Pick History.csv')
     # Create DraftPickID from season and overall_pick
     df['DraftPickID'] = df['season'].astype(str) + '_' + df['overall_pick'].astype(str)
-    draft_data = df[['DraftPickID', 'season', 'overall_pick']].copy()
-    draft_data.columns = ['DraftPickID', 'SeasonID', 'OverallPick']
-    draft_data['DraftYear'] = draft_data['SeasonID']
+    draft_data = df[['DraftPickID', 'season', 'overall_pick', 'player_id']].copy()
+    draft_data.columns = ['DraftPickID', 'SeasonID', 'OverallPick', 'PlayerID']
+    # Filter to only existing players
+    draft_data = draft_data[draft_data['PlayerID'].isin(existing_players)]
     # Remove duplicates
     draft_data = draft_data.drop_duplicates(subset=['DraftPickID'], keep='first')
     draft_data.to_sql('DRAFT_PICK', conn, if_exists='append', index=False)
@@ -112,19 +118,9 @@ def load_all_star(conn):
     """Load ALL_STAR and ALL_STAR_PLAYER tables"""
     print("Loading ALL_STAR tables...")
     
-    # Dictionary of season to winning team abbreviation (based on MVP's team, mapped to current abbreviations)
-    winning_teams = {
-        1951: 'BOS', 1952: 'GSW', 1953: 'LAL', 1954: 'BOS', 1955: 'BOS', 1956: 'ATL', 1957: 'BOS', 1958: 'ATL',
-        1959: 'ATL', 1960: 'GSW', 1961: 'SAC', 1962: 'ATL', 1963: 'BOS', 1964: 'SAC', 1965: 'SAC', 1966: 'SAC',
-        1967: 'GSW', 1968: 'PHI', 1969: 'SAC', 1970: 'NYK', 1971: 'OKC', 1972: 'LAL', 1973: 'BOS', 1974: 'DET',
-        1975: 'NYK', 1976: 'WAS', 1977: 'PHI', 1978: 'LAC', 1979: 'DEN', 1980: 'SAS', 1981: 'BOS', 1982: 'BOS',
-        1983: 'PHI', 1984: 'DET', 1985: 'HOU', 1986: 'DET', 1987: 'OKC', 1988: 'CHI', 1989: 'UTA', 1990: 'LAL',
-        1991: 'PHI', 1992: 'LAL', 1993: 'UTA', 1994: 'CHI', 1995: 'SAC', 1996: 'CHI', 1997: 'CHA', 1998: 'CHI',
-        2000: 'SAS', 2001: 'PHI', 2002: 'LAL', 2003: 'MIN', 2004: 'LAL', 2005: 'PHI', 2006: 'CLE', 2007: 'LAL',
-        2008: 'CLE', 2009: 'LAL', 2010: 'MIA', 2011: 'LAL', 2012: 'OKC', 2013: 'LAC', 2014: 'CLE', 2015: 'OKC',
-        2016: 'OKC', 2017: 'NOP', 2018: 'CLE', 2019: 'GSW', 2020: 'LAC', 2021: 'MIL', 2022: 'GSW', 2023: 'BOS',
-        2024: 'MIL', 2025: 'GSW'
-    }
+    # Load winning teams from CSV
+    df_winners = pd.read_csv('./nba/all_star_winners.csv')
+    winning_teams = dict(zip(df_winners['season'], df_winners['winning_team']))
     
     df = pd.read_csv('./nba/All-Star Selections.csv')
     
@@ -148,13 +144,20 @@ def load_all_star(conn):
 def load_statistics(conn):
     """Load STATISTICS table with FK to PLAYER"""
     print("Loading STATISTICS table...")
+    # Get existing PlayerIDs and TeamIDs to avoid FK violations
+    cursor = conn.cursor()
+    cursor.execute("SELECT TeamID FROM TEAM")
+    existing_teams = set(row[0] for row in cursor.fetchall())
+    
     df = pd.read_csv('./nba/Player Totals.csv')
-    # Filter out null player_ids
+    # Filter out null player_ids and TOT (total) rows to avoid double-counting
     df = df.dropna(subset=['player_id'])
+    # Filter to only existing players and teams
+    df = df[df['team'].isin(existing_teams)]
     # Create StatsID from player_id, season, and team to handle trades
     df['StatsID'] = df['player_id'] + '_' + df['season'].astype(str) + '_' + df['team'].astype(str)
-    stats_data = df[['StatsID', 'player_id', 'pts', 'trb', 'ast', 'stl', 'blk']].copy()
-    stats_data.columns = ['StatsID', 'PlayerID', 'Points', 'Rebounds', 'Assist', 'Steals', 'Blocks']
+    stats_data = df[['StatsID', 'player_id', 'season', 'team', 'pts', 'trb', 'ast', 'stl', 'blk']].copy()
+    stats_data.columns = ['StatsID', 'PlayerID', 'SeasonID', 'TeamID', 'Points', 'Rebounds', 'Assist', 'Steals', 'Blocks']
     # Remove any remaining duplicates
     stats_data = stats_data.drop_duplicates(subset=['StatsID'], keep='first')
     stats_data.to_sql('STATISTICS', conn, if_exists='append', index=False)

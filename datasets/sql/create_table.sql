@@ -1,4 +1,3 @@
--- NBA Database Schema based on ER Diagram
 -- Enable foreign key constraints
 PRAGMA foreign_keys = ON;
 
@@ -57,12 +56,15 @@ CREATE TABLE IF NOT EXISTS GAME (
 CREATE TABLE IF NOT EXISTS STATISTICS (
     StatsID TEXT PRIMARY KEY,
     PlayerID TEXT NOT NULL,
+    SeasonID TEXT NOT NULL,
+    TeamID TEXT NOT NULL,
     Points INTEGER,
     Rebounds INTEGER,
     Assist INTEGER,
     Steals INTEGER,
     Blocks INTEGER,
-    FOREIGN KEY (PlayerID) REFERENCES PLAYER(PlayerID)
+    FOREIGN KEY (PlayerID) REFERENCES PLAYER(PlayerID),
+    FOREIGN KEY (TeamID) REFERENCES TEAM(TeamID)
 );
 
 -- PLAYER_TEAM junction table (plays for relationship)
@@ -94,8 +96,9 @@ CREATE TABLE IF NOT EXISTS DRAFT_PICK (
     DraftPickID TEXT PRIMARY KEY,
     SeasonID TEXT NOT NULL,
     OverallPick INTEGER,
-    DraftYear INTEGER,
-    FOREIGN KEY (SeasonID) REFERENCES SEASON(SeasonID)
+    PlayerID TEXT,
+    FOREIGN KEY (SeasonID) REFERENCES SEASON(SeasonID),
+    FOREIGN KEY (PlayerID) REFERENCES PLAYER(PlayerID)
 );
 
 -- ALL_STAR_PLAYER junction table (Selected for relationship)
