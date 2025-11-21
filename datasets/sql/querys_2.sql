@@ -1,31 +1,3 @@
--- 30 SQL Queries based on the NBA Stats Database Schema
--- Use Case 1: Update Player Roster Mid-Season (Administrator functionality for trades)
--- Use Case 2: View information based on specific actions (User queries for stats, awards, etc.)
-
--- Use Case 1: Update Queries for Player Trades
-
--- 1. Update a player's team in PLAYER_TEAM table (mark as traded and update team)
-UPDATE PLAYER_TEAM
-SET TeamID = 'NEW_TEAM_ID', Traded = 1
-WHERE PlayerID = 'PLAYER_ID' AND TeamID = 'OLD_TEAM_ID';
-
--- 2. Insert new PLAYER_SEASON record for the traded player in the new season
-INSERT INTO PLAYER_SEASON (PlayerID, SeasonID, Team, Age, Experience, position)
-VALUES ('PLAYER_ID', 'SEASON_ID', 'NEW_TEAM_ID', 25, 5, 'POSITION');
-
--- 3. Update PLAYER_SEASON to reflect the trade (change team mid-season)
-UPDATE PLAYER_SEASON
-SET Team = 'NEW_TEAM_ID'
-WHERE PlayerID = 'PLAYER_ID' AND SeasonID = 'SEASON_ID';
-
--- 4. Add a new PLAYER_TEAM relationship for the traded player
-INSERT INTO PLAYER_TEAM (PlayerID, TeamID, position, Traded)
-VALUES ('PLAYER_ID', 'NEW_TEAM_ID', 'POSITION', 1);
-
--- 5. Update STATISTICS to associate with new team (create new stats record)
-INSERT INTO STATISTICS (StatsID, PlayerID, Points, Rebounds, Assist, Steals, Blocks)
-VALUES ('NEW_STATS_ID', 'PLAYER_ID', 20, 10, 5, 2, 1);
-
 -- Use Case 2: Select Queries for Viewing Information
 
 -- 6. Get basic player information
@@ -43,12 +15,12 @@ WHERE pt.TeamID = 'ATL';
 SELECT s.Points, s.Rebounds, s.Assist, s.Steals, s.Blocks
 FROM STATISTICS s
 JOIN PLAYER_SEASON ps ON s.PlayerID = ps.PlayerID AND s.SeasonID = ps.SeasonID
-WHERE ps.PlayerID = 'jamesle01' AND ps.SeasonID = '2023';;
+WHERE ps.PlayerID = 'jamesle01' AND ps.SeasonID = '2023';
 
 -- 9. Get all awards won by a player
 SELECT a.AwardName, pa.AwardYear
 FROM AWARD a
-JOIN PLAYERAWARD pa ON a.AwardID = pa.AwardID
+JOIN PLAYER_AWARD pa ON a.AwardID = pa.AwardID
 WHERE pa.PlayerID = 'jamesle01'
 ORDER BY pa.AwardYear DESC;
 
@@ -117,7 +89,7 @@ WHERE ps.SeasonID = '2023';
 -- 19. Get awards from last year
 SELECT a.AwardName, p.PlayerName, pa.AwardYear
 FROM AWARD a
-JOIN PLAYERAWARD pa ON a.AwardID = pa.AwardID
+JOIN PLAYER_AWARD pa ON a.AwardID = pa.AwardID
 JOIN PLAYER p ON pa.PlayerID = p.PlayerID
 WHERE pa.AwardYear = 2024
 ORDER BY a.AwardName;

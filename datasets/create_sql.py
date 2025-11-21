@@ -111,7 +111,7 @@ def load_awards(conn):
     pa_data = df[['award', 'player_id', 'season']].copy()
     pa_data = pa_data.dropna(subset=['player_id'])  # Remove rows with null PlayerID
     pa_data.columns = ['AwardID', 'PlayerID', 'AwardYear']
-    pa_data.to_sql('PLAYERAWARD', conn, if_exists='append', index=False)
+    pa_data.to_sql('PLAYER_AWARD', conn, if_exists='append', index=False)
     print(f"  Loaded {len(pa_data)} player-award records")
 
 def load_all_star(conn):
