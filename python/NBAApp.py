@@ -1,10 +1,14 @@
-from NBADatabase import NBADatabase
+from .NBADatabase import NBADatabase
 
 
 class NBAApp:
     def __init__(self):
         self.db = NBADatabase()
         self.running = True
+        # Simple in-memory auth state and credentials for protected actions
+        self._auth_ok = False
+        self._auth_user = "admin"
+        self._auth_pass = "password"
     
     def clear_screen(self):
     
@@ -69,6 +73,28 @@ class NBAApp:
     def wait_for_enter(self):
         
         input("\nPress Enter to continue...")
+    
+    def require_auth(self) -> bool:
+        """
+        Prompt for credentials before running protected operations.
+        Stores the session in memory so the user doesn't have to re-enter
+        credentials after a successful login.
+        """
+        if self._auth_ok:
+            return True
+        
+        print("\n Administrator access required.")
+        username = input("Username: ").strip()
+        password = input("Password: ").strip()
+        
+        if username == self._auth_user and password == self._auth_pass:
+            self._auth_ok = True
+            print("\n Access granted.")
+            return True
+        
+        print("\n Access denied. Returning to main menu.")
+        self.wait_for_enter()
+        return False
     
     
     def handle_search_player(self):
@@ -440,6 +466,9 @@ class NBAApp:
     
     def handle_trade_player(self):
         
+        if not self.require_auth():
+            return
+        
         self.print_header("TRADE PLAYER")
         player_id = input("Enter Player ID: ").strip()
         old_team = input("Enter Current Team ID: ").strip().upper()
@@ -458,6 +487,9 @@ class NBAApp:
         self.wait_for_enter()
     
     def handle_add_stats(self):
+        
+        if not self.require_auth():
+            return
         
         self.print_header("ADD PLAYER STATISTICS")
         player_id = input("Enter Player ID: ").strip()
